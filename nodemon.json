@@ -3,7 +3,7 @@
        "dist/*",
        "dist"
     ],
-    "exec": "pnpm build",
+    "exec": "yarn build",
     "ext": "*.*"
  }
  
