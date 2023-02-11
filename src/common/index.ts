@@ -37,6 +37,11 @@ import Icons from "./icons";
 import PronounManager from './pronouns';
 
 /**
+ * @param Constants: Constant information used throughout the plugin
+ */
+import Constants from "./info"
+
+/**
  * Finally, export all of these functions. Other components in the code will be able to access these methods by accessing @arg index.ts afterwards
  */
 export {
@@ -44,5 +49,6 @@ export {
     ArrayImplementations,
     tryCallback,
     Icons,
-    PronounManager
+    PronounManager,
+    Constants
 };

@@ -10,7 +10,7 @@
 import { React, constants, stylesheet } from '@vendetta/metro/common';
 import { findByProps } from '@vendetta/metro';
 import { General } from '@vendetta/ui/components';
-import { ArrayImplementations as ArrayOps, Miscellaneous } from '../../common';
+import { ArrayImplementations as ArrayOps, Miscellaneous, Constants } from '../../common';
 
 /**
  * @param {* from General}: Components used throughout the component.
@@ -22,11 +22,6 @@ const { TouchableOpacity, View, Image, Text, Animated } = General;
  * @param Router: This is used to open a url externally with @arg Router.openURL ~
  */
 const Router = findByProps('transitionToGuild')
-
-/**
- * @param {string} pluginRepo: The source of the plugin
- */
-const pluginRepo: string = "https://github.com/acquitelol/vd-pronoun-db"
 
 /**
  * This is the main Style Sheet. All of the components used in this function will use this stylesheet.
@@ -128,7 +123,7 @@ export default ({name, authors}) => {
      * Opens the Repository of @arg PronounDB externally, using the @arg Router provided before.
      * @returns {void}
      */
-    const onPress = (): void => Router.openURL(pluginRepo);
+    const onPress = (): void => Router.openURL(Constants.plugin.source);
 
     /** 
      * The main animated style, which is going to be modified by the Animated property.
@@ -195,7 +190,7 @@ export default ({name, authors}) => {
                  * @param name: The name of the plugin. In this case its @arg PronounDB.
                  * @uses @arg {[styles.mainText, styles.header]} asStyleArray
                  */}
-                <TouchableOpacity onPress={(): void => Router.openURL(pluginRepo)}>
+                <TouchableOpacity onPress={(): void => Router.openURL(Constants.plugin.source)}>
                     <Text style={[styles.mainText, styles.header]}>
                         {name}
                     </Text>
@@ -221,7 +216,7 @@ export default ({name, authors}) => {
                             * @uses @arg authorsArray: The array of authors, as a reference. It is better practice to use it from the callback rather than the object passed to the function.
                       */}
                     {ArrayOps.mapItem(authors, (author, index: number, authorsArray: any[]) => { 
-                        return <TouchableOpacity onPress={(): void => Router.openURL(author.profile)}> 
+                        return <TouchableOpacity onPress={(): void => Router.openURL(Constants.author.profile[author] ?? "https://github.com/")}> 
                             {/**
                              * Main text element.
                              * @uses @arg {[styles.mainText, styles.subHeader, {paddingLeft: 4, fontFamily: Constants.Fonts.DISPLAY_BOLD, flexDirection: 'row'}]} styling

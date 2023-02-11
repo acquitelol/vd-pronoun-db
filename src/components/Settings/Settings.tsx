@@ -20,7 +20,7 @@ import { storage } from '@vendetta/plugin';
 import { useProxy } from '@vendetta/storage';
 import Credits from "../Dependent/Credits";
 import SectionWrapper from "../Dependent/SectionWrapper";
-import { Icons, Miscellaneous } from "../../common";
+import { Icons, Miscellaneous, Constants } from "../../common";
 import { findByProps } from '@vendetta/metro';
 
 /**
@@ -35,11 +35,6 @@ const { ScrollView, View, Image } = General;
  * @param Router: This is used to open a url externally with @arg Router.openURL ~
  */
 const Router = findByProps('transitionToGuild')
-
-/**
- * @param {string} pluginRepo: The source of the plugin
- */
-const pluginRepo: string = "https://github.com/acquitelol/vd-pronoun-db"
 
 /**
  * @param {stylesheet} styles: The main stylesheet for the items in the UI.
@@ -190,7 +185,7 @@ export default () => {
                          * Simply opens the plugin repository externally to the user using the Router.
                          * @uses @param {string} plugin.repo: The blob link of the plugin.
                          */
-                        Router.openURL(pluginRepo)
+                        Router.openURL(Constants.plugin.source)
                      }}
                   />
             </View>
