@@ -216,7 +216,7 @@ export default ({name, authors}) => {
                             * @uses @arg authorsArray: The array of authors, as a reference. It is better practice to use it from the callback rather than the object passed to the function.
                       */}
                     {ArrayOps.mapItem(authors, (author, index: number, authorsArray: any[]) => { 
-                        return <TouchableOpacity onPress={(): void => Router.openURL(Constants.author.profile[author] ?? "https://github.com/")}> 
+                        return <TouchableOpacity onPress={(): void => Router.openURL(Constants.author.profile[author.name] ?? "https://github.com/")}> 
                             {/**
                              * Main text element.
                              * @uses @arg {[styles.mainText, styles.subHeader, {paddingLeft: 4, fontFamily: Constants.Fonts.DISPLAY_BOLD, flexDirection: 'row'}]} styling
