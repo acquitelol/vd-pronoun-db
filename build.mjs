@@ -1,5 +1,5 @@
 import { rollup } from "rollup";
-import { readFile, writeFile, readdir } from "fs/promises";
+import { readFile, writeFile } from "fs/promises";
 import { createHash } from "crypto";
 import esbuild from "rollup-plugin-esbuild";
 import nodeResolve from "@rollup/plugin-node-resolve";
