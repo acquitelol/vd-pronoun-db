@@ -32,7 +32,7 @@ import Icons from "./icons";
  * @param queue: The queue of IDs
  * @param fetching: Whether the function is currently fetching
  * @param referenceMap: The mapping from shorthand names to full names
- * @func updateQueuedPronouns: Fetch 15 unique pronouns and set them to the map at a time from the PronounDB database.
+ * @func updateQueuedPronouns: Fetch 49 unique pronouns and set them to the map at a time from the PronounDB database.
  */
 import PronounManager from './pronouns';
 

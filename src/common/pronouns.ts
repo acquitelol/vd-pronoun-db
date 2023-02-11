@@ -47,50 +47,70 @@ export default {
     } as Record<string, string>,
 
     /**
-     * Fetches 15 unique @var { Discord } IDs' Pronouns from the PronounDB database at a time and set them to the map.
+     * Fetches 49 unique @var { Discord } IDs' Pronouns from the PronounDB database at a time and set them to the map.
      * @returns {Promise<void>}
      */
     async updateQueuedPronouns(): Promise<void> {
-        // return early if the queue is empty or if current fetching (function will be recalled recusively at the end to clean up anyway)
+        /**
+         * Return early if the @arg queue is empty or if currently @arg fetching (function will be recalled @arg recusively at the end to clean up anyway)
+         */
         if (this.queue.length <= 0 || this.fetching) return;
 
-        // fetch and remove the first 15 ids
-        const ids = this.queue.splice(0, 15);
+        /**
+         * Get the first @arg {49} ids, removing them from the queue in the process
+         */
+        const ids = this.queue.splice(0, 49);
 
-        // get a new id from the top of the queue stack until you get one which is not in the map already (so unique and needs to be fetched)
-        const greedilyGetNewID = (id: string) => {
+        /**
+         * Gets a new id from the top of the @arg queue stack until you get one which is not in the @arg map already (so @arg unique and is actually worth fetching/hasn't been fetched yet)
+         * @param id: The id of the user to fetch 
+         * @returns {string} id/newId
+         */
+        const greedilyGetNewID = (id: string): string => {
             if (this.queue.length <= 0) return id;
             if (this.map[id]) return greedilyGetNewID(this.queue.shift())
             return id;
         }
 
-        // for each id, greedily get a new unique id
+        /**
+         * For each @arg id, greedily get a new @arg unique id which will return either the same @arg id or a new one depending on if it is @arg unique or not.
+         */
         for (const id of ids) {
             if (this.map[id]) ids[id] = greedilyGetNewID(id)
         }
 
-        // set fetching to true. any new instances of this function called will return early.
+        /**
+         * Set @arg fetching to true. Any new instances of this function called will @return early.
+         */
         this.fetching = true;
 
-        // fetch the unfiltered list of pronouns with the ids as the search param
+        /**
+         * Fetch the @arg unfiltered list of @arg pronouns with the @arg ids placed into the template literal string.
+         */
         const unfilteredPronounRes = await(
             await fetch(`https://pronoundb.org/api/v1/lookup-bulk?platform=discord&ids=${ids.join(",")}`, {
                 method: "GET",
-                headers: { "Accept": "application/json", "X-PronounDB-Source": "Vendetta" }
+                headers: { "Accept": "application/json", "X-PronounDB-Source": "Enmity" }
             })
         ).json()
 
-        // filter each pronoun to be formattable as a number
+        /**
+         * @filter each pronoun to be only @arg ids which are numbers
+         */
         const filteredPronounRes = Object.fromEntries(
             Object
                 .entries(unfilteredPronounRes)
                 .filter(([key, _]) => !isNaN(+key)));
         Object.assign(this.map, filteredPronounRes)
 
-        // set fetching back to false, so any new instances will be able to continue past the first if check.
+        /**
+         * Set @arg fetching back to false, so any new instances will be able to @continue past the first if check.
+         */
         this.fetching = false;
         
-        // recall the function recursively if any items are still in the queue
+        /**
+         * Recall the function @recursively if any items are still in the queue
+         */
         if (this.queue.length > 0) this.updateQueuedPronouns();
     }
 }
