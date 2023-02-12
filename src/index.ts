@@ -14,23 +14,32 @@ import { findByProps } from '@vendetta/metro';
 import { constants, stylesheet, ReactNative } from '@vendetta/metro/common';
 import { before } from '@vendetta/patcher';
 import { storage } from '@vendetta/plugin';
-import { Miscellaneous, PronounManager as PM, ArrayImplementations as ArrayOps } from './common';
+import { PronounManager as PM, ArrayImplementations as ArrayOps } from './common';
 import Settings from './components/Settings/Settings';
 
 /**
  * @param UserStore: Allows for getting a user, patched later
  * @param ReactNative: Main ReactNative implementation
- * @param DCDChatManager: Allows to patch @arg updateRows which lets me modify the stringified json of a message in the chat area.
+ * @param DCDChatManager: llows to patch @arg updateRows which lets me modify the stringified json of a message in the chat area.
  */
 const UserStore = findByProps("getUser");
 const { DCDChatManager } = ReactNative.NativeModules;
 
+/**
+ * @param styles: Main themed styleSheet for the OP tag background color
+ */
 const styles = stylesheet.createThemedStyleSheet({
     /**
      * @param opTagBackgroundColor: The main color of the background of the OP-tag.
      */
     opTagBackgroundColor: {
         color: constants.ThemeColorMap.HEADER_PRIMARY
+    },
+    /**
+     * @param opTagTextColor: The main color of the background of the OP-tag.
+     */
+    opTagTextColor: {
+        color: constants.ThemeColorMap.BACKGROUND_PRIMARY
     }
 })
 
@@ -128,7 +137,7 @@ export default {
                      * Afterwards set the @arg text and @arg background color to a @arg {processed and themed} color
                      * using the @arg background color to determine a @arg text color with a custom implementation.
                      */
-                    row.message.opTagTextColor = ReactNative.processColor(Miscellaneous.filterColor(styles.opTagBackgroundColor.color, "#212121", "#121212"));
+                    row.message.opTagTextColor = ReactNative.processColor(styles.opTagTextColor.color);
                     row.message.opTagBackgroundColor = ReactNative.processColor(styles.opTagBackgroundColor.color);
                 } else if (!row.message.tagText) {
                     /**

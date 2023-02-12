@@ -43,53 +43,6 @@ const displayToast = (source: string, type: 'clipboard' | 'tooltip'): void => {
     });
 };
 
-/** 
- * Chooses whether the color should be Dark or Light depending on the background color of the element.
- * @param {string} color: The background color
- * @param {string} light: The light color
- * @param {string} dark: The dark color
- * @param {number?} boundary: The maximum boundary that the color can reach before choosing dark mode.
- * @param {string?} label: The label of the function when called. May be undefined.
- * @returns {string color}
- */
-const filterColor = (color: string, light: string, dark: string, boundary: number = 186, label?: string): string => {
-    return tryCallback(() => {
-        /**
-         * Gets the @arg color without the @arg {#} (@arg {#FFFFFF} -> @arg {FFFFFF})
-         */
-        let baseColor = color.replace("#", "")
-
-        /**
-         * Parses a color as an integer from any @arg base provided to @arg {base 10}
-         * @param {string} color: The color provided as a @func string, in @func baseAny
-         * @param {number[]} digits: The digits of the color which it should return as @func base10
-         * @param {number} base: The base provided, can be anything but it would be @func base16 when called
-         * @returns {~ string formattedColor}
-         */
-        const parseColorAsInt = (color: string, digits: number[], base: number) => parseInt(color.substring(digits[0], digits[1]), base)
-
-        /**
-         * Gets the correct integer color for each part of the color provided
-         * @param {number} red: The red value of the color, at @arg {0, 2}
-         * @param {number} green: The green value of the color, at @arg {2, 4}
-         * @param {number} blue: The blue value of the color, at @arg {4, 6}
-         */
-        const red = parseColorAsInt(baseColor, [0, 2], 16),
-            green = parseColorAsInt(baseColor, [2, 4], 16),
-            blue = parseColorAsInt(baseColor, [4, 6], 16);
-
-        /**
-         * Checks if the colors added up are higher than the boundary, and returns the light or dark color accordingly
-         * @returns ->
-                 * @if {(@arg red + @arg green + @arg blue are bigger than the boundary)} -> Return the dark color.
-                 * @else {()} -> Return the light color. 
-         */
-        return (((red + green + blue) / (255 * 3)) > boundary)
-            ?   dark 
-            :   light
-    }, [color, light, dark, boundary], manifest.name, 'checking if color should be light or dark at', label);
-};
-
 /**
  * @param UserStore: Variable to allow getting the current user
  */
@@ -106,6 +59,5 @@ export default
 {
     shadow,
     displayToast,
-    filterColor,
     localizedImage
 };
