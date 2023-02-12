@@ -195,7 +195,7 @@ export default () => {
        * Renders a simple FormRow with a version and build to display to the user. This is unnecessary as there as multiple ways to view this but it adds slightly more polish to the Settings Panel.
        */}
       <Text style={styles.subheaderText}>
-         {`Build: (${manifest.hash})`}
+         {`Build: (${manifest.hash.substring(0, 8)})`}
       </Text>
    </ScrollView>
 }
