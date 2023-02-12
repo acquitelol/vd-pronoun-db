@@ -3,7 +3,7 @@
        "dist/*",
        "dist"
     ],
-    "exec": "yarn build",
+    "exec": "clear && yarn build",
     "ext": "*.*"
  }
  

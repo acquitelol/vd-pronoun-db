@@ -28,7 +28,7 @@ import { findByProps } from '@vendetta/metro';
  * @param {* from General}: General ReactNative components used inside the settings panel
  */
 const { FormRow, FormSwitch } = Forms;
-const { ScrollView, View, Image } = General;
+const { ScrollView, View, Image, Text } = General;
 
 /** 
  * Main modules being fetched by the plugin to open links externally and copy text to clipboard
@@ -191,5 +191,11 @@ export default () => {
             </View>
          </>} />
       </View>
+      {/**
+       * Renders a simple FormRow with a version and build to display to the user. This is unnecessary as there as multiple ways to view this but it adds slightly more polish to the Settings Panel.
+       */}
+      <Text style={styles.subheaderText}>
+         {`Build: (${manifest.hash})`}
+      </Text>
    </ScrollView>
 }
