@@ -41,6 +41,7 @@ import PronounManager from './pronouns';
  */
 import Constants from "./info"
 
+
 /**
  * Finally, export all of these functions. Other components in the code will be able to access these methods by accessing @arg index.ts afterwards
  */

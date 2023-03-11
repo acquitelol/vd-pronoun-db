@@ -14,6 +14,7 @@ export default {
     Open:  getAssetIDByName('ic_leave_stage'),
     Clipboard:  getAssetIDByName('pending-alert'),
     Clock: getAssetIDByName('clock'),
+    Pronoun: getAssetIDByName('ic_profile_badge_guild_booster_lvl9'),
     Settings: {
         Toasts: {
             Settings: getAssetIDByName('ic_selection_checked_24px'),
@@ -21,6 +22,8 @@ export default {
         },
         Initial: getAssetIDByName('coffee'),
         Update: getAssetIDByName("discover"),
-        Locale: getAssetIDByName("ic_locale_24px"),
+        Locale: getAssetIDByName('ic_locale_24px'),
+        External: getAssetIDByName("ic_raised_hand_list"),
+        Edit: getAssetIDByName("ic_edit_24px")
     }
 };

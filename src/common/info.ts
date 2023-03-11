@@ -1,6 +1,7 @@
 export default {
     plugin: {
-        source: "https://github.com/acquitelol/vd-pronoun-db"
+        source: "https://github.com/acquitelol/vd-pronoun-db",
+        pronoundb: "https://pronoundb.org/"
     },
     author: {
         profile: {

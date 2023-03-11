@@ -90,7 +90,7 @@ export default {
         const unfilteredPronounRes = await(
             await fetch(`https://pronoundb.org/api/v1/lookup-bulk?platform=discord&ids=${ids.join(",")}`, {
                 method: "GET",
-                headers: { "Accept": "application/json", "X-PronounDB-Source": "Enmity" }
+                headers: { "Accept": "application/json", "X-PronounDB-Source": "Vendetta" }
             })
         ).json()
 
