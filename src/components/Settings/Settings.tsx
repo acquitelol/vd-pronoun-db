@@ -9,11 +9,13 @@ import { Icons, Miscellaneous, Constants } from "../../common";
 import { findByProps } from '@vendetta/metro';
 import { semanticColors } from '@vendetta/ui';
 import IntelligentImage from '../Dependent/IntelligentImage';
+import { getDebugInfo } from '@vendetta/debug';
 
 const { FormRow, FormSwitch, FormDivider } = Forms;
 const { ScrollView, View, Text } = General;
 
-const Router = findByProps('transitionToGuild')
+const Router = findByProps('transitionToGuild', "openURL")
+const optionalMargin = parseInt(getDebugInfo()?.discord?.version.split(".")[0]) > 163 ? 15 : 0;
 
 const styles = stylesheet.createThemedStyleSheet({
    icon: {
@@ -71,6 +73,7 @@ export default () => {
                   leading={<FormRow.Icon style={styles.icon} source={Icons.Settings.Locale} />}
                   trailing={<FormSwitch
                      value={storage.isTimestamp}
+                     style={{ marginLeft: -optionalMargin }}
                      onValueChange={() => {
                         storage.isTimestamp = !storage.isTimestamp
                         setTimestampPreview(storage.isTimestamp)
@@ -85,6 +88,7 @@ export default () => {
                   leading={<FormRow.Icon style={styles.icon} source={Icons.Settings.Edit} />}
                   trailing={<FormSwitch
                      value={storage.isRole}
+                     style={{ marginLeft: -optionalMargin }}
                      onValueChange={() => {
                         storage.isRole = !storage.isRole
                         setRolePreview(storage.isRole)
@@ -142,7 +146,7 @@ export default () => {
                   subLabel={`Open the ${manifest.name} website externally at \`https://pronoundb.org\`.`}
                   onLongPress={() => Miscellaneous.displayToast(`Opens the PronounDB website in an external page which allows you to link your Discord account to PronounDB.`, 'tooltip')}
                   leading={<FormRow.Icon style={styles.icon} source={Icons.Settings.External} />}
-                  trailing={() => <FormRow.Arrow />}
+                  trailing={() => <FormRow.Arrow style={{ marginLeft: -optionalMargin }} />}
                   onPress={() => {
                      /**
                       * Simply opens the PronounDB website externally to the user using the Router.

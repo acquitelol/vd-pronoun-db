@@ -66,44 +66,38 @@ export default {
             const rows = JSON.parse(args[1]);
 
             for ( const row of rows ) {
+                if (row.type === 1) {
+                    row.message.shouldShowRoleDot = true
+                    row.message.shouldShowRoleOnName = true
+                }
+
                 if (row.type !== 1
                     || !row?.message?.authorId
                     || !PM.map[row?.message?.authorId]
                     || PM.referenceMap[PM.map[row?.message?.authorId]] === "unspecified"
                 ) continue;
-                
-                /**
-                 * @param pronoun: The pronoun that will be displayed to the user. This should not be invalid.
-                 */
-                const pronoun = PM.referenceMap[PM.map[row.message.authorId]];
 
                 /**
-                 * Checks if the user has enabled the @arg isTimestamp option in settings & if there is a valid timestamp on the message
-                 * If this is true, then modify the @arg timestamp only and continue to the next row, without executing the rest of the loop.
+                 * @param {string} pronoun: The main pronoun in @plainText ~ This *should not be undefined*
                  */
+                const pronoun: string = PM.referenceMap[PM.map[row.message.authorId]];
+
                 if (storage.isTimestamp && row.message.timestamp) {
                     row.message.timestamp += (" • " + pronoun);
                     continue;
                 }
 
-                if (!row.message.opTagText) {
-                    /**
-                     * Sets the @arg opTagText to the @var pronoun defined above.
-                     */
-                    row.message.opTagText = pronoun;
-
-                    /** 
-                     * Afterwards set the @arg text and @arg background color to a @arg {processed and themed} color
-                     * using the @arg background color to determine a @arg text color with a custom implementation.
-                     */
-                    row.message.opTagTextColor = ReactNative.processColor(styles.opTagTextColor.color);
-                    row.message.opTagBackgroundColor = ReactNative.processColor(styles.opTagBackgroundColor.color);
-                } else if (!row.message.tagText) {
-                    /**
-                     * Set the @arg tagText to the @var pronoun defined above.
-                     */
-                    row.message.tagText = pronoun
+                if (row.message.opTagText) {
+                    row.message.tagText = (
+                        row.message.tagText 
+                            ? row.message.tagText + " • " 
+                            : ""
+                        + row.message.opTagText)
                 }
+
+                row.message.opTagText = pronoun;
+                row.message.opTagTextColor = ReactNative.processColor(styles.opTagTextColor.color);
+                row.message.opTagBackgroundColor = ReactNative.processColor(styles.opTagBackgroundColor.color);
             }
     
             /**
