@@ -66,11 +66,6 @@ export default {
             const rows = JSON.parse(args[1]);
 
             for ( const row of rows ) {
-                if (row.type === 1) {
-                    row.message.shouldShowRoleDot = true
-                    row.message.shouldShowRoleOnName = true
-                }
-
                 if (row.type !== 1
                     || !row?.message?.authorId
                     || !PM.map[row?.message?.authorId]
