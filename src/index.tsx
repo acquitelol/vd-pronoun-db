@@ -1,4 +1,4 @@
-import { findByProps, findByStoreName } from '@vendetta/metro';
+import { findByProps, findByStoreName, findByName } from '@vendetta/metro';
 import { constants, stylesheet, ReactNative } from '@vendetta/metro/common';
 import { after, before } from '@vendetta/patcher';
 import { storage } from '@vendetta/plugin';
@@ -8,7 +8,8 @@ import Pronoun from './components/Dependent/Pronoun';
 import Settings from './components/Settings/Settings';
 import { semanticColors } from '@vendetta/ui';
 
-const UserProfile = findByProps("PRIMARY_INFO_TOP_OFFSET", "SECONDARY_INFO_TOP_MARGIN", "SIDE_PADDING")
+const UserProfile = findByProps("PRIMARY_INFO_TOP_OFFSET", "SECONDARY_INFO_TOP_MARGIN", "SIDE_PADDING");
+const UserProfileName = findByName("UserProfileName")
 const UserStore = findByStoreName("UserStore");
 const { DCDChatManager } = ReactNative.NativeModules;
 
@@ -37,6 +38,7 @@ export default {
         unpatchProfile = after("type", UserProfile.default, (_, res) => {
             const profileCardSection = (findInReactTree(res, r => 
                 r?.props?.children.find((res: any) => typeof res?.props?.displayProfile?.userId === "string")
+                && !r?.props.children.find((e: any) => e.type === UserProfileName)
                 && r?.type?.displayName === "View"
                 && Array.isArray(r?.props?.style)
             ) as any)?.props?.children
