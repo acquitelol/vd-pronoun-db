@@ -52,7 +52,6 @@ export default {
                 || !PM.map[userId]
                 || PM.referenceMap[PM.map[userId]] === "unspecified"
             ) {
-                console.log(`uid: ${userId}, map: ${PM.map[userId]}, ref: ${PM.referenceMap[PM.map[userId]]}`)
                 return res
             }
 
