@@ -36,12 +36,10 @@ export default {
         });
 
         unpatchProfile = after("type", UserProfile.default, (_, res) => {
-            const profileCardSection = (findInReactTree(res, r => 
-                r?.props?.children.find((res: any) => typeof res?.props?.displayProfile?.userId === "string")
-                && !r?.props.children.find((e: any) => e.type === UserProfileName)
-                && r?.type?.displayName === "View"
-                && Array.isArray(r?.props?.style)
-            ) as any)?.props?.children
+            const profileCardSection = findInReactTree(res, r => 
+                r?.type?.displayName === "View" &&
+                r?.props?.children.findIndex(i => i?.type?.name === "UserProfileBio") !== -1
+            )?.props?.children;
 
             if (!profileCardSection) return res;
 

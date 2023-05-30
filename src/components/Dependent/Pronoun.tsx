@@ -3,80 +3,75 @@ import { Icons } from "../../common";
 import { storage } from '@vendetta/plugin';
 import { General } from "@vendetta/ui/components";
 import { semanticColors } from "@vendetta/ui";
+import { findByName, findByProps } from "@vendetta/metro";
 
 const { View, Text, TouchableOpacity } = General;
+const { useThemeContext } = findByProps("useThemeContext");
+const { meta: { resolveSemanticColor } } = findByProps("colors", "meta");
+const UserProfileSection = findByName("UserProfileSection");
+const { ProfileGradientCard } = findByProps("ProfileGradientCard");
+const { triggerHaptic } = findByProps("triggerHaptic");
 
 const styles = stylesheet.createThemedStyleSheet({
     container: {
-        marginTop: 12,
-        marginLeft: 12,
-        alignSelf: 'flex-start'
-    },
-    eyebrow: {
-        textTransform: 'uppercase',
-        fontSize: 12,
-        lineHeight: 16,
-        fontFamily: constants.Fonts.PRIMARY_BOLD,
-        color: semanticColors.TEXT_NORMAL,
+        alignSelf: 'flex-start',
+        padding: 1,
+        borderRadius: 9,
+        width: "100%",
 
-        marginBottom: 10
+        marginTop: -4,
+        marginRight: -12
     },
     innerContainer: {
-        backgroundColor: semanticColors.BACKGROUND_MOBILE_PRIMARY,
-        borderRadius: 8,
-        borderWidth: 1,
-        borderColor: semanticColors.HEADER_PRIMARY,
-        overflow: 'hidden',
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
+        paddingHorizontal: 6,
+        paddingVertical: 8,
+        overflow: "hidden",
+        flexDirection: "row",
         justifyContent: 'center',
+        alignItems: 'center',
     },
     circle: {
-        width: 12,
-        height: 12,
-        borderRadius: 12/2,
-        backgroundColor: semanticColors.HEADER_PRIMARY,
-
-        marginLeft: 8,
+        width: 10,
+        height: 10,
+        borderRadius: 10/2,
         marginRight: 6
     },
-    content: {
-        fontSize: 14,
-        paddingRight: 8,
-        paddingTop: 8,
-        paddingBottom: 8,
+    fallback: {
+        color: constants.ThemeColorMap.BACKGROUND_SECONDARY_ALT
     },
     text: {
         fontFamily: constants.Fonts.DISPLAY_NORMAL,
-        color: semanticColors.TEXT_NORMAL
     }
 })
 
-/**
- * Main @Pronoun component implementation.
- * @param pronoun: The pronoun of the user, passed as a string
- * @returns TSX Component
- */
-export default ({ pronoun }) => {
-    return <View style={styles.container}>
-        <Text style={styles.eyebrow}>
-            Pronouns
-        </Text>
-        <TouchableOpacity onPress={() => toasts.open({
-            content: pronoun,
-            source: Icons.Pronoun
-        })}>
+export default ({ pronoun }: { pronoun: string }) => {
+    const themeContext = useThemeContext();
+    const textColor = resolveSemanticColor(themeContext.theme, constants.ThemeColorMap.TEXT_NORMAL);
+
+    return <UserProfileSection title="Pronouns">
+        <TouchableOpacity 
+            onPress={() => {
+                toasts.open({
+                    content: pronoun,
+                    source: Icons.Pronoun
+                })
+
+                triggerHaptic();
+            }}
+            style={storage.isRole ? { justifyContent: 'center', alignItems: 'center',} : {}}
+        >
             {storage.isRole
-                ? <View style={styles.innerContainer}>
-                    <View style={styles.circle} />
-                    <Text style={[styles.text, styles.content]}>
-                        {pronoun}
-                    </Text>
-                </View> 
-                : <Text style={[styles.text, { fontSize: 16 }]}>
+                ? <ProfileGradientCard style={styles.container} fallbackBackground={styles.fallback.color}>
+                    <View style={styles.innerContainer}>
+                        <View style={[styles.circle, { backgroundColor: textColor }]} />
+                        <Text style={[styles.text, { color: textColor }]}>
+                            {pronoun}
+                        </Text>
+                    </View>
+                </ProfileGradientCard> 
+                : <Text style={[styles.text, { fontSize: 16, color: textColor }]}>
                     {pronoun}
                 </Text>}
         </TouchableOpacity>
-    </View>
+    </UserProfileSection>
 }
