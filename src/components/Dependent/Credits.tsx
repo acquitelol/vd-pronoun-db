@@ -6,7 +6,7 @@ import { semanticColors } from '@vendetta/ui';
 
 const { TouchableOpacity, View, Image, Text, Animated } = General;
 
-const Router = findByProps('transitionToGuild')
+const Router = findByProps('transitionToGuild', "openURL")
 const UserStore = findByStoreName("UserStore");
 const Profiles = findByProps("showUserProfile");
 

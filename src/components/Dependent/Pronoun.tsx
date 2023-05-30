@@ -10,7 +10,7 @@ const { useThemeContext } = findByProps("useThemeContext");
 const { meta: { resolveSemanticColor } } = findByProps("colors", "meta");
 const UserProfileSection = findByName("UserProfileSection");
 const { ProfileGradientCard } = findByProps("ProfileGradientCard");
-const { triggerHaptic } = findByProps("triggerHaptic");
+const HapticModule = findByProps("triggerHaptic");
 
 const styles = stylesheet.createThemedStyleSheet({
     container: {
@@ -37,7 +37,7 @@ const styles = stylesheet.createThemedStyleSheet({
         marginRight: 6
     },
     fallback: {
-        color: constants.ThemeColorMap.BACKGROUND_SECONDARY_ALT
+        color: semanticColors.BACKGROUND_SECONDARY_ALT
     },
     text: {
         fontFamily: constants.Fonts.DISPLAY_NORMAL,
@@ -46,7 +46,7 @@ const styles = stylesheet.createThemedStyleSheet({
 
 export default ({ pronoun }: { pronoun: string }) => {
     const themeContext = useThemeContext();
-    const textColor = resolveSemanticColor(themeContext.theme, constants.ThemeColorMap.TEXT_NORMAL);
+    const textColor = resolveSemanticColor(themeContext.theme, semanticColors.TEXT_NORMAL);
 
     return <UserProfileSection title="Pronouns">
         <TouchableOpacity 
@@ -56,7 +56,7 @@ export default ({ pronoun }: { pronoun: string }) => {
                     source: Icons.Pronoun
                 })
 
-                triggerHaptic();
+                HapticModule && HapticModule.triggerHaptic();
             }}
             style={storage.isRole ? { justifyContent: 'center', alignItems: 'center',} : {}}
         >
