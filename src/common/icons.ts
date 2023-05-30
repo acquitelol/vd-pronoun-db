@@ -14,7 +14,7 @@ export default {
     Open:  getAssetIDByName('ic_leave_stage'),
     Clipboard:  getAssetIDByName('pending-alert'),
     Clock: getAssetIDByName('clock'),
-    Pronoun: getAssetIDByName('ic_profile_badge_guild_booster_lvl9'),
+    Pronoun: getAssetIDByName('ic_accessibility_24px'),
     Settings: {
         Toasts: {
             Settings: getAssetIDByName('ic_selection_checked_24px'),
