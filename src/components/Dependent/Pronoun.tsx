@@ -9,7 +9,7 @@ const { View, Text, TouchableOpacity } = General;
 const { useThemeContext } = findByProps("useThemeContext");
 const { meta: { resolveSemanticColor } } = findByProps("colors", "meta");
 const UserProfileSection = findByName("UserProfileSection");
-const { ProfileGradientCard } = findByProps("ProfileGradientCard");
+const { UserProfileGradientCard } = findByProps("UserProfileGradientCard");
 const HapticModule = findByProps("triggerHaptic");
 
 const styles = stylesheet.createThemedStyleSheet({
@@ -61,14 +61,14 @@ export default ({ pronoun }: { pronoun: string }) => {
             style={storage.isRole ? { justifyContent: 'center', alignItems: 'center',} : {}}
         >
             {storage.isRole
-                ? <ProfileGradientCard style={styles.container} fallbackBackground={styles.fallback.color}>
+                ? <UserProfileGradientCard style={styles.container} fallbackBackground={styles.fallback.color}>
                     <View style={styles.innerContainer}>
                         <View style={[styles.circle, { backgroundColor: textColor }]} />
                         <Text style={[styles.text, { color: textColor }]}>
                             {pronoun}
                         </Text>
                     </View>
-                </ProfileGradientCard> 
+                </UserProfileGradientCard> 
                 : <Text style={[styles.text, { fontSize: 16, color: textColor }]}>
                     {pronoun}
                 </Text>}
