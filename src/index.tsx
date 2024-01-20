@@ -1,5 +1,5 @@
-import { findByProps, findByStoreName, findByName } from '@vendetta/metro';
-import { constants, stylesheet, ReactNative } from '@vendetta/metro/common';
+import { find, findByStoreName, findByName } from '@vendetta/metro';
+import { stylesheet, ReactNative } from '@vendetta/metro/common';
 import { after, before } from '@vendetta/patcher';
 import { storage } from '@vendetta/plugin';
 import { findInReactTree } from '@vendetta/utils';
@@ -8,8 +8,7 @@ import Pronoun from './components/Dependent/Pronoun';
 import Settings from './components/Settings/Settings';
 import { semanticColors } from '@vendetta/ui';
 
-const UserProfile = findByProps("PRIMARY_INFO_TOP_OFFSET", "SECONDARY_INFO_TOP_MARGIN", "SIDE_PADDING");
-const UserProfileName = findByName("UserProfileName")
+const UserProfile = find(x => x?.type?.name == "UserProfile");
 const UserStore = findByStoreName("UserStore");
 const { DCDChatManager } = ReactNative.NativeModules;
 
@@ -35,7 +34,7 @@ export default {
             PM.updateQueuedPronouns();
         });
 
-        unpatchProfile = after("type", UserProfile.default, (_, res) => {
+        unpatchProfile = after("type", UserProfile, (_, res) => {
             const profileCardSection = findInReactTree(res, r => 
                 r?.type?.displayName === "View" &&
                 r?.props?.children.findIndex(i => i?.type?.name === "UserProfileBio") !== -1
